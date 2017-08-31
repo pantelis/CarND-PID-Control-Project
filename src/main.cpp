@@ -1,8 +1,6 @@
 #include <uWS/uWS.h>
-#include <iostream>
 #include "json.hpp"
 #include "PID.h"
-#include <math.h>
 
 // for convenience
 using json = nlohmann::json;
@@ -34,7 +32,9 @@ int main() {
 
     // PID for Steering angle
     PID steer_pid;
-    // Initialize the pid variable.
+
+    // Initialize the pid variable. In the absence of any online optimization these are
+    // the parameter values for the whole duration of the experiment
     steer_pid.Init(0.19, 0.00001, 3.0); // Kp, Ki, Kd
 
 

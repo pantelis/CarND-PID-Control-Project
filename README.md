@@ -5,6 +5,18 @@ Self-Driving Car Engineer Nanodegree Program
 
 ## Manual Tuning of PID Steering and Throttle Parameters
 
+The PID controller has three independent means of control. The description below was based on Wikipedia. 
+
+**Proportional**
+The obvious method is proportional control where the control variable (steering angle) is set in proportion to the existing  cross track error (CTE). The gain associated with this control is $K_p$. However, this control alone will fail when the car is traveling at high speeds as the oscilations around the setpoint are becoming significant. This is evident in the following experiment: the car successfully goes through the track at very low speeds with Kp=1.0 and with no other control applied. 
+
+**Integral**
+An integral term increases steering angle in relation not only to the CTE but also the time for which it has persisted. The gain associated with this control is $K_i$. A pure "I" controller could bring the error to zero, however, it would be both slow reacting at the start (because steering action would be small at the beginning, needing time to get significant), brutal (the steering action increases as long as the error is positive, even if the error has started to approach zero), and slow to end (when the error switches sides, this for some time will only reduce the strength of the steering action from "I", not make it switch sides as well), prompting overshoot and oscillations. Moreover, it could even move the system out of zero error: remembering that the system had been in error, it could prompt a steering action when not needed. Due to lack of any observable steering drift and the aggressive nature of the track, the manually tuned Ki was set to a very small number. 
+
+**Derivative**
+A derivative term does not consider the CTE (meaning it cannot bring it to zero: a pure D controller cannot bring the system to its set point), but the rate of change of CTE, trying to bring this rate to zero. It aims at flattening the CTE trajectory into a horizontal line, dampening the steering angle applied, and so reduces overshoot (error on the other side because too great applied steering). 
+
+For the manual tuning we started with a P only controller and as the oscilations became dominant in the first turn, we started increaseding the Kd gain until they were dumped down. The Ki term as stated above was set to very low value. The optimal set was found to be (Kp, Ki, kd) = (0.19, 0.00001, 3.0). We also implemented the following enhancements: another PID controller to control throttle and therefore keep velocity at a constant (currently around 20 mph) and we also limited the max steering angle to a reasonable value of 40deg. 
 
 ## Dependencies
 
