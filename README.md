@@ -3,6 +3,9 @@ Self-Driving Car Engineer Nanodegree Program
 
 ---
 
+## Manual Tuning of PID Steering and Throttle Parameters
+
+
 ## Dependencies
 
 * cmake >= 3.5
